@@ -11,25 +11,19 @@ describe "Using passgen" do
   end
 
   it "should return password with uppercase chars only" do
-    Passgen::generate(:lowercase => false,
-                      :digits => false).should eql("FLMIJLFPAQ")
+    Passgen::generate(:uppercase => :only).should eql("FLMIJLFPAQ")
   end
   
   it "should return password with lowercase chars only" do
-    Passgen::generate(:uppercase => false,
-                      :digits => false).should eql("flmijlfpaq")
+    Passgen::generate(:lowercase => :only).should eql("flmijlfpaq")
   end
 
   it "should return password with digits only" do
-    Passgen::generate(:lowercase => false,
-                      :uppercase => false).should eql("5895001769")
+    Passgen::generate(:digits => :only).should eql("5895001769")
   end
 
   it "should return password with symbols only" do
-    Passgen::generate(:lowercase => false,
-                      :uppercase => false,
-                      :digits => false,
-                      :symbols => true).should eql("%?*()?%!!@")
+    Passgen::generate(:symbols => :only).should eql("%?*()?%!!@")
   end
 
   it "should return password with lowercase and uppercase chars only"

@@ -9,6 +9,7 @@ module Passgen
   }
 
   def self.generate(params={})
+    parse_valid_tokens(params)
     options = DEFAULT_PARAMS.merge(params)
     p params
 
@@ -21,5 +22,29 @@ module Passgen
     puts valid_tokens.join
     
     Array.new(options[:length]) {valid_tokens[rand(valid_tokens.size)]}.join
+  end
+
+  def self.parse_valid_tokens(params)
+    if params[:lowercase] == :only
+      params[:uppercase] = false
+      params[:digits] = false
+    end
+
+    if params[:uppercase] == :only
+      params[:lowercase] = false
+      params[:digits] = false
+    end
+
+    if params[:digits] == :only
+      params[:lowercase] = false
+      params[:uppercase] = false
+    end
+
+    if params[:symbols] == :only
+      params[:lowercase] = false
+      params[:uppercase] = false
+      params[:digits] = false
+      params[:symbols] = true
+    end
   end
 end

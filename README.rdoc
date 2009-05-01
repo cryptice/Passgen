@@ -15,13 +15,13 @@ The usage could not be easier. Just require and call the generate method:
 
 == Options:
 
-:lowercase => true/false
+:lowercase => true/false/only
 
-:uppercase => true/false
+:uppercase => true/false/only
 
-:digits => true/false
+:digits => true/false/only
 
-:symbols => true/false/list
+:symbols => true/false/only/list
 
 :pronounceable => true/false
 

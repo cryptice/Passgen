@@ -1,0 +1,30 @@
+= Passgen
+
+Ruby gem for generating passwords of every concievable form.
+
+== Install
+
+  gem install cryptice-passgen --sorce http://gems.github.com
+
+== Usage
+
+The usage could not be easier. Just require and call the generate method:
+
+
+== Options:
+
+:lowercase => true/false
+:uppercase => true/false
+:symbols => true/false/list
+:pronounceable => true/false
+:number => integer
+:length => integer/range
+
+Default values:
+
+:lowercase => true/false
+:uppercase => true/false
+:symbols => true/false/list
+:pronounceable => true/false
+:number => 1
+:length => 10

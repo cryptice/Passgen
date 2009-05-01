@@ -1,6 +1,8 @@
 = Passgen
 
-Ruby gem for generating passwords of every concievable form.
+Ruby gem for generating passwords of every concievable form. Although it is
+suitable for use within Rails it has no Rails dependencies and can be used in
+non-Rails applications as well.
 
 == Install
 
@@ -14,17 +16,34 @@ The usage could not be easier. Just require and call the generate method:
 == Options:
 
 :lowercase => true/false
+
 :uppercase => true/false
+
+:digits => true/false
+
 :symbols => true/false/list
+
 :pronounceable => true/false
+
 :number => integer
+
 :length => integer/range
 
-Default values:
+=== Default values:
 
-:lowercase => true/false
-:uppercase => true/false
-:symbols => true/false/list
+:lowercase => true
+
+:uppercase => true
+
+:digits => true
+
+:symbols => false
+
 :pronounceable => true/false
+
 :number => 1
+
 :length => 10
+
+== Copyright and License
+

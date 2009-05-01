@@ -1,6 +1,7 @@
 module Passgen
 
   DEFAULT_PARAMS = {
+    :number => 1,
     :length => 10,
     :lowercase => true,
     :uppercase => true,
@@ -9,22 +10,27 @@ module Passgen
   }
 
   def self.generate(params={})
-    parse_valid_tokens(params)
-    options = DEFAULT_PARAMS.merge(params)
-    p params
+    set_options(params)
 
-    valid_tokens = []
-    
-    valid_tokens += ("a".."z").to_a if options[:lowercase]
-    valid_tokens += ("A".."Z").to_a if options[:uppercase]
-    valid_tokens += ("0".."9").to_a if options[:digits]
-    valid_tokens += %w{! @ # £ $ % & / ( ) + ? *} if options[:symbols]
-    puts valid_tokens.join
-    
-    Array.new(options[:length]) {valid_tokens[rand(valid_tokens.size)]}.join
+    tokens = valid_tokens
+    puts tokens.join
+
+    if n == 1
+      generate_one(tokens)
+    else
+      Array.new(n) { generate_one(tokens) }
+    end
   end
 
-  def self.parse_valid_tokens(params)
+  def self.generate_one(tokens)
+    Array.new(@options[:length]) {tokens[rand(tokens.size)]}.join
+  end
+
+  def self.n
+    @n ||= @options[:number]
+  end
+
+  def self.set_options(params)
     if params[:lowercase] == :only
       params[:uppercase] = false
       params[:digits] = false
@@ -46,5 +52,17 @@ module Passgen
       params[:digits] = false
       params[:symbols] = true
     end
+
+    @options = DEFAULT_PARAMS.merge(params)
+    p @options
+  end
+
+  def self.valid_tokens
+    tmp = []
+    tmp += ("a".."z").to_a if @options[:lowercase]
+    tmp += ("A".."Z").to_a if @options[:uppercase]
+    tmp += ("0".."9").to_a if @options[:digits]
+    tmp += %w{! @ # $ % & / ( ) + ? *} if @options[:symbols]
+    tmp
   end
 end

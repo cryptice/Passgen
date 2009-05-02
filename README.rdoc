@@ -12,6 +12,7 @@ non-Rails applications as well.
 
 The usage could not be easier. Just require and call the generate method:
 
+  >> require 'rubygems'
   >> require 'passgen'
   >> Passgen::generate
   => "zLWCeS3xC9"

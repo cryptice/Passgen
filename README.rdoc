@@ -12,6 +12,10 @@ non-Rails applications as well.
 
 The usage could not be easier. Just require and call the generate method:
 
+  >> require 'passgen'
+  >> Passgen::generate
+  => "zLWCeS3xC9"
+
 == Examples
 
   >> Passgen::generate
@@ -41,12 +45,15 @@ The usage could not be easier. Just require and call the generate method:
 
 == Options:
 
-:lowercase => true/false/only
+=== :lowercase => true/false/only
 * true - Use lowercase letters in the generated password.
 * false - Do not use lowercase letters in the generated password.
 * :only - Only use lowercase letters in the generated password.
 
-:uppercase => true/false/only
+=== :uppercase => true/false/only
+* true - Use uppercase letters in the generated password.
+* false - Do not use uppercase letters in the generated password.
+* :only - Only use uppercase letters in the generated password.
 
 :digits => true/false/only
 

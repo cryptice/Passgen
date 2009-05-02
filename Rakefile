@@ -8,7 +8,7 @@ Echoe.new('passgen', '0.1.1') do |p|
   p.url            = "http://github.com/cryptice/passgen"
   p.author         = "Erik Lindblad"
   p.email          = "eriklindblad3@gmail.com"
-  p.ignore_pattern = ["tmp/*", "script/*"]
+  p.ignore_pattern = ["tmp/*", "script/*", "nbproject/*"]
   p.development_dependencies = []
 end
 

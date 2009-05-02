@@ -5,6 +5,4 @@ lib/passgen.rb
 CHANGELOG
 init.rb
 passgen.gemspec
-nbproject/project.xml
-nbproject/project.properties
 README.rdoc

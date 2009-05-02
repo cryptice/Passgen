@@ -1,6 +1,6 @@
 = Passgen
 
-Ruby gem for generating passwords of every concievable form. Although it is
+Ruby gem for generating passwords quickly and easily. Although it is
 suitable for use within Rails it has no Rails dependencies and can be used in
 non-Rails applications as well.
 
@@ -89,7 +89,7 @@ Set the srand seed to the given integer prior to generating the passwords.
 
 :symbols => false
 
-:pronounceable => true/false
+:pronounceable => Not implemented yet.
 
 :number => 1
 

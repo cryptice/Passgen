@@ -1,8 +1,8 @@
 spec/passgen_spec.rb
 Rakefile
-Manifest
 lib/passgen.rb
 CHANGELOG
 init.rb
 passgen.gemspec
 README.rdoc
+Manifest

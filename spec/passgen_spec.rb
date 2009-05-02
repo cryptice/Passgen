@@ -92,5 +92,24 @@ describe "Using passgen" do
     pass2 = Passgen::generate(:seed => :default)
     pass1.should_not eql(pass2)
   end
-  
+
+  describe "handling tokens" do
+
+    it "should return a-z" do
+      Passgen::lowercase_tokens.should eql(("a".."z").to_a)
+    end
+
+    it "should return A-Z" do
+      Passgen::uppercase_tokens.should eql(("A".."Z").to_a)
+    end
+
+    it "should return 0-9" do
+      Passgen::digit_tokens.should eql(("0".."9").to_a)
+    end
+
+    it "should return default symbols" do
+      Passgen::symbol_tokens.should eql(%w{! @ # $ % & / ( ) + ? *})
+    end
+
+  end
 end

@@ -134,6 +134,10 @@ module Passgen
     :symbols => false
   }
 
+  def self.default_seed
+    Digest::MD5.hexdigest("#{rand}#{Time.now}#{Process.object_id}").to_i(16)
+  end
+
   def self.generate(params={})
     set_options(params)
     tokens = valid_tokens
@@ -146,18 +150,9 @@ module Passgen
     end
   end
 
+  private
   def self.generate_one(tokens)
     Array.new(password_length) {tokens[rand(tokens.size)]}.join
-  end
-
-  def self.set_seed
-    if @options[:seed]
-      if @options[:seed] == :default
-        srand(Digest::MD5.hexdigest("#{rand}#{Time.now}#{Process.object_id}").to_i(16))
-      else
-        srand(@options[:seed])
-      end
-    end
   end
 
   def self.password_length
@@ -199,12 +194,54 @@ module Passgen
     @options = DEFAULT_PARAMS.merge(params)
   end
 
+  def self.set_seed
+    if @options[:seed]
+      if @options[:seed] == :default
+        srand(default_seed)
+      else
+        srand(@options[:seed])
+      end
+    end
+  end
+
+  def self.lowercase_tokens
+    ("a".."z").to_a
+  end
+
+  def self.uppercase_tokens
+    ("A".."Z").to_a
+  end
+
+  def self.digit_tokens
+    ("0".."9").to_a
+  end
+
+  def self.symbol_tokens
+    %w{! @ # $ % & / ( ) + ? *}
+  end
+
+  def self.use_lowercase?
+    @options[:lowercase]
+  end
+
+  def self.use_uppercase?
+    @options[:uppercase]
+  end
+
+  def self.use_digits?
+    @options[:digits]
+  end
+
+  def self.use_symbols?
+    @options[:symbols]
+  end
+
   def self.valid_tokens
     tmp = []
-    tmp += ("a".."z").to_a if @options[:lowercase]
-    tmp += ("A".."Z").to_a if @options[:uppercase]
-    tmp += ("0".."9").to_a if @options[:digits]
-    tmp += %w{! @ # $ % & / ( ) + ? *} if @options[:symbols]
+    tmp += lowercase_tokens if use_lowercase?
+    tmp += uppercase_tokens if use_uppercase?
+    tmp += digit_tokens if use_digits?
+    tmp += symbol_tokens if use_symbols?
     tmp
   end
 end

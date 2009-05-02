@@ -70,15 +70,27 @@ describe "Using passgen" do
   end
   
   it "should return given number of passwords in an Array" do
-    Passgen::generate(:number => 3).should eql("j")
+    Passgen::generate(:number => 3).should eql(["OpTiwRslOh", "IXFlvVFAu8", "0LNdMeQRZN"])
   end
 
-  it "should return a password with given length"
+  it "should return a password with given length" do
+    Passgen::generate(:length => 8).should eql("OpTiwRsl")
+  end
 
-  it "should return several passwords of variable length"
+  it "should return several passwords of variable length" do
+    Passgen::generate(:length => 3..12, :number => 2).should eql(["pTiwRslOhIX", "VFAu80LN"])
+  end
 
-  it "should use given seed"
+  it "should use given seed" do
+    pass1 = Passgen::generate(:seed => 5)
+    pass2 = Passgen::generate(:seed => 5)
+    pass1.should eql(pass2)
+  end
 
-  it "should set seed to Time.now + Process.id"
+  it "should set seed to Time.now + Process.id" do
+    pass1 = Passgen::generate(:seed => :default)
+    pass2 = Passgen::generate(:seed => :default)
+    pass1.should_not eql(pass2)
+  end
   
 end

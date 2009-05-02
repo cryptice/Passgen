@@ -11,23 +11,41 @@ module Passgen
 
   def self.generate(params={})
     set_options(params)
-
     tokens = valid_tokens
-    puts tokens.join
+    set_seed
 
     if n == 1
       generate_one(tokens)
     else
-      Array.new(n) { generate_one(tokens) }
+      Array.new(n) {|i| generate_one(tokens) }
     end
   end
 
   def self.generate_one(tokens)
-    Array.new(@options[:length]) {tokens[rand(tokens.size)]}.join
+    Array.new(password_length) {tokens[rand(tokens.size)]}.join
+  end
+
+  def self.set_seed
+    if @options[:seed]
+      if @options[:seed] == :default
+        srand(Digest::MD5.hexdigest("#{rand}#{Time.now}#{Process.object_id}").to_i(16))
+      else
+        srand(@options[:seed])
+      end
+    end
+  end
+
+  def self.password_length
+    if @options[:length].is_a?(Range)
+      tmp = @options[:length].to_a
+      tmp[rand(tmp.size)]
+    else
+      @options[:length].to_i
+    end
   end
 
   def self.n
-    @n ||= @options[:number]
+    @options[:number]
   end
 
   def self.set_options(params)
@@ -54,7 +72,6 @@ module Passgen
     end
 
     @options = DEFAULT_PARAMS.merge(params)
-    p @options
   end
 
   def self.valid_tokens

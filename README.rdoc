@@ -29,6 +29,8 @@ The usage could not be easier. Just require and call the generate method:
 
 :length => integer/range
 
+:seed => integer
+
 === Default values:
 
 :lowercase => true

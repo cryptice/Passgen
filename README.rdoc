@@ -6,7 +6,7 @@ non-Rails applications as well.
 
 == Install
 
-  gem install cryptice-passgen --sorce http://gems.github.com
+  gem install cryptice-passgen --source http://gems.github.com
 
 == Usage
 

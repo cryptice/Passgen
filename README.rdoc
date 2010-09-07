@@ -6,7 +6,7 @@ non-Rails applications as well.
 
 == Install
 
-  gem install cryptice-passgen --source http://gems.github.com
+  gem install passgen
 
 == Usage
 
@@ -100,7 +100,7 @@ Set the srand seed to the given integer prior to generating the passwords.
 
 == Copyright and license
 
-Copyright (c) 2009 Erik Lindblad
+Copyright (c) 2009-2010 Erik Lindblad
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

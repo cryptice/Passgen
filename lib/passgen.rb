@@ -121,7 +121,8 @@
 #OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 #WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require "digest"
+require 'digest'
+require 'probabilities'
 
 module Passgen
 
@@ -131,7 +132,8 @@ module Passgen
     :lowercase => true,
     :uppercase => true,
     :digits => true,
-    :symbols => false
+    :symbols => false,
+    :pronounceable => false
   }
 
   def self.default_seed
@@ -152,7 +154,11 @@ module Passgen
 
   private
   def self.generate_one(tokens)
-    Array.new(password_length) {tokens[rand(tokens.size)]}.join
+    if @options[:pronounceable]
+      "hej hopp"
+    else
+      Array.new(password_length) {tokens[rand(tokens.size)]}.join
+    end
   end
 
   def self.password_length

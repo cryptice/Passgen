@@ -112,4 +112,10 @@ describe "Using passgen" do
     end
 
   end
+
+  describe "pronounceable" do
+    it "should return a pronounceable password" do
+      Passgen::generate(:pronounceable => true).should == "Hej hopp"
+    end
+  end
 end

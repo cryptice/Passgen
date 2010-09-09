@@ -155,12 +155,77 @@ module Passgen
   private
   def self.generate_one(tokens)
     if @options[:pronounceable]
-      "hej hopp"
+      generate_pronounceable
     else
       Array.new(password_length) {tokens[rand(tokens.size)]}.join
     end
   end
 
+  def self.generate_pronounceable
+    pwl = 10
+    sum = 0.0
+    ranno = 0.0
+    pwnum = 0
+    pik = 0.0
+    password = ""
+    alphabet = %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}
+
+    n1 = 26
+    n2 = 26
+    n3 = 26
+    
+    sigma = 0
+    n1.times do |i|
+      n2.times do |j|
+        n3.times do |k|
+          sigma += P[i][j][k]
+        end
+      end
+    end
+    
+    # Pick a random starting point.
+    found_start = false
+    pik = rand # random number [0,1[
+    ranno = pik * sigma # weight by sum of frequencies
+    sum = 0;
+    n1.times do |c1|
+      n2.times do |c2|
+        n3.times do |c3|
+          sum += P[c1][c2][c3]
+          if sum > ranno
+            password << alphabet[c1]
+            password << alphabet[c2]
+            password << alphabet[c3]
+            found_start = true
+            break
+          end
+        end
+        break if found_start
+      end
+      break if found_start
+    end
+
+    # Now do a random walk.
+    (3...pwl).each do |nchar|
+      c1 = alphabet.index(password[nchar-2..nchar-2])
+      c2 = alphabet.index(password[nchar-1..nchar-1])
+      sum = 0
+      n3.times {|c3| sum += P[c1][c2][c3]}
+      break if sum == 0
+      pik = rand
+      ranno = pik * sum
+      sum = 0;
+      n3.times do |c3|
+        sum += P[c1][c2][c3]
+        if sum > ranno
+          password << alphabet[c3]
+          break
+        end
+      end
+    end
+    password
+  end
+  
   def self.password_length
     if @options[:length].is_a?(Range)
       tmp = @options[:length].to_a

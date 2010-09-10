@@ -126,7 +126,7 @@ require 'probabilities'
 
 module Passgen
 
-  VERSION = "0.9.0"
+  VERSION = "0.9.1"
   
   DEFAULT_PARAMS = {
     :number => 1,

@@ -4,6 +4,9 @@ Ruby gem for generating passwords quickly and easily. Although it is
 suitable for use within Rails it has no Rails dependencies and can be used in
 non-Rails applications as well.
 
+It can generate passwords including lower case, upper case, digits and symbols and also
+can generate pronounceable passwords.
+
 == Install
 
   gem install passgen
@@ -67,9 +70,6 @@ The usage could not be easier. Just require and call the generate method:
 * :only - Only use symbols in the generated password.
 * :list - A string with the symbols to use. Not implemented yet.
 
-=== :pronounceable => true/false
-Not implmented yet.
-
 === :number => integer
 Number of passwords to generate. If >1 the result is an Array.
 
@@ -79,6 +79,16 @@ lengths within the given range.
 
 === :seed => integer/:default
 Set the srand seed to the given integer prior to generating the passwords.
+
+=== :pronounceable => true/false
+* true - Generate pronounceable passwords
+* false - No effect,
+
+=== :digits_after => true/number (Only in combination with :pronounceable)
+* Pads the pronounceable password with number digits at the end. Defaults to 2 if true is passed.
+
+=== :digits_before => true/number (Only in combination with :pronounceable)
+* Pads the pronounceable password with number digits in front. Defaults to 2 if true is passed.
 
 === Default values:
 
@@ -97,6 +107,12 @@ Set the srand seed to the given integer prior to generating the passwords.
 :length => 10
 
 :seed => nil
+
+:pronounceable => false
+
+:digits_after => 2 (Only in combination with pronounceable)
+
+:digits_before => 2 (Only in combination with pronounceable)
 
 == Copyright and license
 

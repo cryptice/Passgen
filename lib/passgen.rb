@@ -126,6 +126,8 @@ require 'probabilities'
 
 module Passgen
 
+  VERSION = "0.9.0"
+  
   DEFAULT_PARAMS = {
     :number => 1,
     :length => 10,

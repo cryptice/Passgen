@@ -42,10 +42,16 @@ The usage could not be easier. Just require and call the generate method:
   >> Passgen::generate(:seed => 5) # Will generate same password again
   => "JoV9M2qjiK"
 
-  >> Passgen::generate(:seed => :default) # Will set random seed...
-  => "SI8QDBdV98"
-  >> Passgen::generate(:seed => :default) # and hence give different password
-  => "tHHU5HLBAn"
+  >> Passgen::generate(:pronounceable => true) # Pronounceable, mixed case password
+  => "ActeodEuRT"
+  >> Passgen::generate(:pronounceable => true, :lowercase => :only) # Pronounceable lower case
+  => "terysolang"
+  >> Passgen::generate(:pronounceable => true, :uppercase => :only) # Pronounceable upper case
+  => "ACTOPECHEI"
+  >> Passgen::generate(:pronounceable => true, :digits_before => 3) # Pad with digits in front
+  => "886uRApLIN"
+  >> Passgen::generate(:pronounceable => true, :digits_before => 3) # Pad with digits at the end
+  => "uRAPLIN886"
 
 == Options:
 
@@ -82,7 +88,7 @@ Set the srand seed to the given integer prior to generating the passwords.
 
 === :pronounceable => true/false
 * true - Generate pronounceable passwords
-* false - No effect,
+* false - No effect
 
 === :digits_after => true/number (Only in combination with :pronounceable)
 * Pads the pronounceable password with number digits at the end. Defaults to 2 if true is passed.

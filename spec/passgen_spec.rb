@@ -96,15 +96,15 @@ describe "Using passgen" do
   describe "handling tokens" do
 
     it "should return a-z" do
-      Passgen::lowercase_tokens.should eql(("a".."z").to_a)
+      Passgen::LOWERCASE_TOKENS.should eql(("a".."z").to_a)
     end
 
     it "should return A-Z" do
-      Passgen::uppercase_tokens.should eql(("A".."Z").to_a)
+      Passgen::UPPERCASE_TOKENS.should eql(("A".."Z").to_a)
     end
 
     it "should return 0-9" do
-      Passgen::digit_tokens.should eql(("0".."9").to_a)
+      Passgen::DIGIT_TOKENS.should eql(("0".."9").to_a)
     end
 
     it "should return default symbols" do
@@ -114,8 +114,37 @@ describe "Using passgen" do
   end
 
   describe "pronounceable" do
-    it "should return a pronounceable password" do
-      Passgen::generate(:pronounceable => true, :seed => 135).should == "orthestanu"
+    it "should return a pronounceable lower case password" do
+      Passgen::generate(:pronounceable => true, :lowercase => :only).should == "ishanghter"
     end
+
+    it "should return a pronounceable upper case password" do
+      Passgen::generate(:pronounceable => true, :uppercase => :only).should == "ISHANGHTER"
+    end
+
+    it "should return a pronounceable mixed case password" do
+      Passgen::generate(:pronounceable => true).should == "iShfIeRBAt"
+    end
+    
+    it "should return a pronounceable mixed case password of length 7" do
+      Passgen::generate(:pronounceable => true, :length => 7).should == "IShfIeR"
+    end
+    
+    it "should return a pronounceable password with 3 digits in front" do
+      Passgen::generate(:pronounceable => true, :digits_before => 3).should == "886uRApLIN"
+    end
+
+    it "should return a pronounceable password with default 2 digits in front" do
+      Passgen::generate(:pronounceable => true, :digits_before => true).should == "88mpICePED"
+    end
+
+    it "should return a pronounceable password with 3 digits at the end" do
+      Passgen::generate(:pronounceable => true, :digits_after => 3).should == "uRAPLIN886"
+    end
+
+    it "should return a pronounceable password with default 2 digits at the end" do
+      Passgen::generate(:pronounceable => true, :digits_after => true).should == "mPICEPED88"
+    end
+
   end
 end

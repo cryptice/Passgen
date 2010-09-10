@@ -154,11 +154,15 @@ module Passgen
 
   private
   def self.alphabet(index)
-    %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}[index]
-  end
-  
-  def self.alphabet_index(char)
-    %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}.index(char)
+    if use_lowercase? && !use_uppercase?
+      LOWERCASE_TOKENS[index]
+    elsif use_uppercase? && !use_lowercase?
+      UPPERCASE_TOKENS[index]
+    else
+      tmp = LOWERCASE_TOKENS[index]
+      tmp.upcase! if rand > 0.5
+      tmp
+    end
   end
   
   def self.generate_one(tokens)
@@ -170,13 +174,25 @@ module Passgen
   end
 
   def self.generate_pronounceable
-    pwl = 10
-    sum = 0.0
-    ranno = 0.0
-    pwnum = 0
     password = ""
 
-    # Pick a random starting point.
+    # Append digits in front
+    digits_prefix = if @options[:digits_before]
+      @options[:length] -= @options[:digits_before]
+      Array.new(@options[:digits_before]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
+    else
+      ""
+    end
+
+    # Append digits at the end
+    digits_suffix = if @options[:digits_after]
+      @options[:length] -= @options[:digits_after]
+      Array.new(@options[:digits_after]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
+    else
+      ""
+    end
+
+    # Find a random starting point.
     found_start = false
     ranno = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
     sum = 0;
@@ -197,10 +213,10 @@ module Passgen
       break if found_start
     end
 
-    # Now do a random walk.
-    (3...pwl).each do |nchar|
-      c1 = alphabet_index(password[nchar-2..nchar-2])
-      c2 = alphabet_index(password[nchar-1..nchar-1])
+    # Do a random walk.
+    (3...@options[:length]).each do |nchar|
+      c1 = LETTER_INDEXES[password[nchar-2..nchar-2]]
+      c2 = LETTER_INDEXES[password[nchar-1..nchar-1]]
       sum = 0
       N_LETTERS.times {|c3| sum += P[c1][c2][c3]}
       break if sum == 0
@@ -214,7 +230,7 @@ module Passgen
         end
       end
     end
-    password
+    digits_prefix + password + digits_suffix
   end
   
   def self.password_length
@@ -253,6 +269,14 @@ module Passgen
       params[:symbols] = true
     end
 
+    if params[:digits_before] == true
+      params[:digits_before] = 2
+    end
+
+    if params[:digits_after] == true
+      params[:digits_after] = 2
+    end
+
     @options = DEFAULT_PARAMS.merge(params)
   end
 
@@ -264,18 +288,6 @@ module Passgen
         srand(@options[:seed])
       end
     end
-  end
-
-  def self.lowercase_tokens
-    ("a".."z").to_a
-  end
-
-  def self.uppercase_tokens
-    ("A".."Z").to_a
-  end
-
-  def self.digit_tokens
-    ("0".."9").to_a
   end
 
   def self.symbol_tokens
@@ -300,9 +312,9 @@ module Passgen
 
   def self.valid_tokens
     tmp = []
-    tmp += lowercase_tokens if use_lowercase?
-    tmp += uppercase_tokens if use_uppercase?
-    tmp += digit_tokens if use_digits?
+    tmp += LOWERCASE_TOKENS if use_lowercase?
+    tmp += UPPERCASE_TOKENS if use_uppercase?
+    tmp += DIGIT_TOKENS if use_digits?
     tmp += symbol_tokens if use_symbols?
     tmp
   end

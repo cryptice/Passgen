@@ -153,6 +153,14 @@ module Passgen
   end
 
   private
+  def self.alphabet(index)
+    %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}[index]
+  end
+  
+  def self.alphabet_index(char)
+    %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}.index(char)
+  end
+  
   def self.generate_one(tokens)
     if @options[:pronounceable]
       generate_pronounceable
@@ -166,36 +174,20 @@ module Passgen
     sum = 0.0
     ranno = 0.0
     pwnum = 0
-    pik = 0.0
     password = ""
-    alphabet = %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}
 
-    n1 = 26
-    n2 = 26
-    n3 = 26
-    
-    sigma = 0
-    n1.times do |i|
-      n2.times do |j|
-        n3.times do |k|
-          sigma += P[i][j][k]
-        end
-      end
-    end
-    
     # Pick a random starting point.
     found_start = false
-    pik = rand # random number [0,1[
-    ranno = pik * sigma # weight by sum of frequencies
+    ranno = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
     sum = 0;
-    n1.times do |c1|
-      n2.times do |c2|
-        n3.times do |c3|
+    N_LETTERS.times do |c1|
+      N_LETTERS.times do |c2|
+        N_LETTERS.times do |c3|
           sum += P[c1][c2][c3]
           if sum > ranno
-            password << alphabet[c1]
-            password << alphabet[c2]
-            password << alphabet[c3]
+            password << alphabet(c1)
+            password << alphabet(c2)
+            password << alphabet(c3)
             found_start = true
             break
           end
@@ -207,18 +199,17 @@ module Passgen
 
     # Now do a random walk.
     (3...pwl).each do |nchar|
-      c1 = alphabet.index(password[nchar-2..nchar-2])
-      c2 = alphabet.index(password[nchar-1..nchar-1])
+      c1 = alphabet_index(password[nchar-2..nchar-2])
+      c2 = alphabet_index(password[nchar-1..nchar-1])
       sum = 0
-      n3.times {|c3| sum += P[c1][c2][c3]}
+      N_LETTERS.times {|c3| sum += P[c1][c2][c3]}
       break if sum == 0
-      pik = rand
-      ranno = pik * sum
+      ranno = rand * sum
       sum = 0;
-      n3.times do |c3|
+      N_LETTERS.times do |c3|
         sum += P[c1][c2][c3]
         if sum > ranno
-          password << alphabet[c3]
+          password << alphabet(c3)
           break
         end
       end

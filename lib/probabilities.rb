@@ -730,4 +730,16 @@ module Passgen
       [7,0,0,0,1,0,0,0,7,0,0,17,0,0,2,0,0,0,0,0,0,0,1,0,5,0]                           # Z Z
     ]
   ]
+  
+  N_LETTERS = 26
+  sigma = 0
+  N_LETTERS.times do |i|
+    N_LETTERS.times do |j|
+      N_LETTERS.times do |k|
+        sigma += P[i][j][k]
+      end
+    end
+  end
+  SIGMA = sigma
+
 end

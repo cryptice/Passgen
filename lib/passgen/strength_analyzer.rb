@@ -1,7 +1,7 @@
 module Passgen
   class StrengthAnalyzer
     MIN_LENGTH = 8
-    attr_reader :password, :score, :status, :errors
+    attr_reader :password, :score, :complexity, :errors
     
     def initialize(pw)
       @password = pw
@@ -84,7 +84,6 @@ module Passgen
       sComplexity = 'Invalid'
       sStandards = 'Below'
       nMinPwdLen = MIN_LENGTH
-      #if (document.all) { var nd = 0; } else { var nd = 1; }
       
       nScore = @password.length * nMultLength
       nLength = @password.length
@@ -92,9 +91,7 @@ module Passgen
       arrPwdLen = arrPwd.length
       
       # Loop through password to check for Symbol, Numeric, Lowercase and Uppercase pattern matches
-      p arrPwdLen
       arrPwdLen.times do |a|
-        puts "Checking character #{a}"
         if /[A-Z]/.match(arrPwd[a])
           if (nTmpAlphaUC != "")
             if (nTmpAlphaUC + 1) == a
@@ -162,7 +159,7 @@ module Passgen
       23.times do |s|
         sFwd = sAlphas[s...s+3]
         sRev = sFwd.reverse
-        if @password.downcase.index(sFwd) != -1 || @password.downcase.index(sRev) != -1
+        if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
           nSeqAlpha += 1
           nSeqChar += 1
         end
@@ -172,7 +169,7 @@ module Passgen
       8.times do |s|
         sFwd = sNumerics[s...s+3]
         sRev = sFwd.reverse
-        if @password.downcase.index(sFwd) != -1 || @password.downcase.index(sRev) != -1
+        if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
           nSeqNumber += 1
           nSeqChar += 1
         end
@@ -182,7 +179,7 @@ module Passgen
       8.times do |s|
         sFwd = sSymbols[s...s+3]
         sRev = sFwd.reverse
-        if @password.downcase.index(sFwd) != -1 || @password.downcase.index(sRev) != -1
+        if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
           nSeqSymbol += 1
           nSeqChar += 1
         end
@@ -192,128 +189,137 @@ module Passgen
   
       # General point assignment
       puts "nLengthBonus: #{nScore}" 
+
       if nAlphaUC > 0 && nAlphaUC < nLength
         nScore += (nLength - nAlphaUC) * 2
         sAlphaUC = "+ #{(nLength - nAlphaUC) * 2}" 
       end
+      puts "nAlphaUCBonus: #{sAlphaUC}" 
+      puts "nScore: #{nScore}" 
+
       if nAlphaLC > 0 && nAlphaLC < nLength 
         nScore += (nLength - nAlphaLC) * 2
         sAlphaLC = "+ #{(nLength - nAlphaLC) * 2}"
       end
+      puts "nAlphaLCBonus: #{sAlphaLC}"
+      puts "nScore: #{nScore}" 
+
       if (nNumber > 0 && nNumber < nLength)
         nScore += nNumber * nMultNumber
         sNumber = "+ #{nNumber * nMultNumber}"
       end
+      puts "nNumberBonus: #{sNumber}"
+      puts "nScore: #{nScore}" 
+
       if nSymbol > 0  
         nScore += nSymbol * nMultSymbol
         sSymbol = "+ #{nSymbol * nMultSymbol}"
       end
+      puts "nSymbolBonus: #{sSymbol}"
+      puts "nScore: #{nScore}" 
+
       if nMidChar > 0
         nScore += nMidChar * nMultMidChar
         sMidChar = "+ #{nMidChar * nMultMidChar}"
       end
-      puts "nAlphaUCBonus: #{sAlphaUC}" 
-      puts "nAlphaLCBonus: #{sAlphaLC}"
-      puts "nNumberBonus: #{sNumber}"
-      puts "nSymbolBonus: #{sSymbol}"
       puts "nMidCharBonus: #{sMidChar}"
+      puts "nScore: #{nScore}" 
       
       # Point deductions for poor practices
-#      if ((nAlphaLC > 0 || nAlphaUC > 0) && nSymbol === 0 && nNumber === 0) {  // Only Letters
-#        nScore = parseInt(nScore - nLength);
-#        nAlphasOnly = nLength;
-#        sAlphasOnly = "- " + nLength;
-#      }
-#      if (nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0) {  // Only Numbers
-#        nScore = parseInt(nScore - nLength); 
-#        nNumbersOnly = nLength;
-#        sNumbersOnly = "- " + nLength;
-#      }
-#      if (nRepChar > 0) {  // Same character exists more than once
-#        nScore = parseInt(nScore - nRepInc);
-#        sRepChar = "- " + nRepInc;
-#      }
-#      if (nConsecAlphaUC > 0) {  // Consecutive Uppercase Letters exist
-#        nScore = parseInt(nScore - (nConsecAlphaUC * nMultConsecAlphaUC)); 
-#        sConsecAlphaUC = "- " + parseInt(nConsecAlphaUC * nMultConsecAlphaUC);
-#      }
-#      if (nConsecAlphaLC > 0) {  // Consecutive Lowercase Letters exist
-#        nScore = parseInt(nScore - (nConsecAlphaLC * nMultConsecAlphaLC)); 
-#        sConsecAlphaLC = "- " + parseInt(nConsecAlphaLC * nMultConsecAlphaLC);
-#      }
-#      if (nConsecNumber > 0) {  // Consecutive Numbers exist
-#        nScore = parseInt(nScore - (nConsecNumber * nMultConsecNumber));  
-#        sConsecNumber = "- " + parseInt(nConsecNumber * nMultConsecNumber);
-#      }
-#      if (nSeqAlpha > 0) {  // Sequential alpha strings exist (3 characters or more)
-#        nScore = parseInt(nScore - (nSeqAlpha * nMultSeqAlpha)); 
-#        sSeqAlpha = "- " + parseInt(nSeqAlpha * nMultSeqAlpha);
-#      }
-#      if (nSeqNumber > 0) {  // Sequential numeric strings exist (3 characters or more)
-#        nScore = parseInt(nScore - (nSeqNumber * nMultSeqNumber)); 
-#        sSeqNumber = "- " + parseInt(nSeqNumber * nMultSeqNumber);
-#      }
-#      if (nSeqSymbol > 0) {  // Sequential symbol strings exist (3 characters or more)
-#        nScore = parseInt(nScore - (nSeqSymbol * nMultSeqSymbol)); 
-#        sSeqSymbol = "- " + parseInt(nSeqSymbol * nMultSeqSymbol);
-#      }
-#      $("nAlphasOnlyBonus").innerHTML = sAlphasOnly; 
-#      $("nNumbersOnlyBonus").innerHTML = sNumbersOnly; 
-#      $("nRepCharBonus").innerHTML = sRepChar; 
-#      $("nConsecAlphaUCBonus").innerHTML = sConsecAlphaUC; 
-#      $("nConsecAlphaLCBonus").innerHTML = sConsecAlphaLC; 
-#      $("nConsecNumberBonus").innerHTML = sConsecNumber;
-#      $("nSeqAlphaBonus").innerHTML = sSeqAlpha; 
-#      $("nSeqNumberBonus").innerHTML = sSeqNumber; 
-#      $("nSeqSymbolBonus").innerHTML = sSeqSymbol; 
+      if (nAlphaLC > 0 || nAlphaUC > 0) && nSymbol == 0 && nNumber == 0 # Only Letters
+        nScore -= nLength
+        nAlphasOnly = nLength
+        sAlphasOnly = "- #{nLength}"
+      end
+      puts "nAlphasOnlyBonus: #{sAlphasOnly}"
+      puts "nScore: #{nScore}"
+
+      if nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0 # Only Numbers
+        nScore -= nLength
+        nNumbersOnly = nLength
+        sNumbersOnly = "- #{nLength}"
+      end
+      puts "nNumbersOnlyBonus: #{sNumbersOnly}"
+      puts "nScore: #{nScore}"
+
+      if nRepChar > 0 # Same character exists more than once
+        nScore -= nRepInc
+        sRepChar = "- #{nRepInc}"
+      end
+      puts "nRepCharBonus: #{sRepChar}"
+      puts "nScore: #{nScore}"
+
+      if nConsecAlphaUC > 0 # Consecutive Uppercase Letters exist
+        nScore -= nConsecAlphaUC * nMultConsecAlphaUC
+        sConsecAlphaUC = "- #{nConsecAlphaUC * nMultConsecAlphaUC}"
+      end
+      puts "nConsecAlphaUCBonus: #{sConsecAlphaUC}"
+      puts "nScore: #{nScore}"
+
+      if nConsecAlphaLC > 0 # Consecutive Lowercase Letters exist
+        nScore -= nConsecAlphaLC * nMultConsecAlphaLC
+        sConsecAlphaLC = "- #{nConsecAlphaLC * nMultConsecAlphaLC}"
+      end
+      puts "nConsecAlphaLCBonus: #{sConsecAlphaLC}"
+      puts "nScore: #{nScore}"
+
+      if nConsecNumber > 0 # Consecutive Numbers exist
+        nScore -= nConsecNumber * nMultConsecNumber
+        sConsecNumber = "- #{nConsecNumber * nMultConsecNumber}"
+      end
+      puts "nConsecNumberBonus: #{sConsecNumber}"
+      puts "nScore: #{nScore}"
+
+      if nSeqAlpha > 0 # Sequential alpha strings exist (3 characters or more)
+        nScore -= nSeqAlpha * nMultSeqAlpha
+        sSeqAlpha = "- #{nSeqAlpha * nMultSeqAlpha}"
+      end
+      puts "nSeqAlphaBonus: #{sSeqAlpha}"
+      puts "nScore: #{nScore}"
+
+      if nSeqNumber > 0 # Sequential numeric strings exist (3 character or more)
+        nScore -= nSeqNumber * nMultSeqNumber
+        sSeqNumber = "- #{nSeqNumber * nMultSeqNumber}"
+      end
+      puts "nSeqNumberBonus: #{sSeqNumber}"
+      puts "nScore: #{nScore}"
+
+      if nSeqSymbol > 0 # Sequential symbol strings exist (3 character or more)
+        nScore -= nSeqSymbol * nMultSeqSymbol
+        sSeqSymbol = "- #{nSeqSymbol * nMultSeqSymbol}"
+      end
+      puts "nSeqSymbolBonus: #{sSeqSymbol}"
+      puts "nScore: #{nScore}"
+
+      # Determine if mandatory requirements have been met and set image indicators accordingly
+      arrChars = [nLength, nAlphaUC, nAlphaLC, nNumber, nSymbol]
+      arrCharsIds = ["nLength", "nAlphaUC", "nAlphaLC", "nNumber", "nSymbol"]
+      arrCharsLen = arrChars.length;
+      arrCharsLen.times do |c|
+        if (arrCharsIds[c] == "nLength") 
+          minVal = MIN_LENGTH - 1
+        else
+          minVal = 0
+        end
+        if arrChars[c] == (minVal + 1)
+          nReqChar += 1
+        elsif arrChars[c] > (minVal + 1)
+          nReqChar += 1
+        end
+      end
+      nRequirements = nReqChar;
+      if @password.length >= nMinPwdLen
+        nMinReqChars = 3
+      else
+        nMinReqChars = 4
+      end
+      if nRequirements > nMinReqChars # One or more required characters exist
+        nScore += (nRequirements * 2) 
+        sRequirements = "+ #{nRequirements * 2}"
+      end
+      puts "nRequirementsBonus: #{sRequirements}"
+      puts "nScore: #{nScore}"
   
-#      /* Determine if mandatory requirements have been met and set image indicators accordingly */
-#      var arrChars = [nLength,nAlphaUC,nAlphaLC,nNumber,nSymbol];
-#      var arrCharsIds = ["nLength","nAlphaUC","nAlphaLC","nNumber","nSymbol"];
-#      var arrCharsLen = arrChars.length;
-#      for (var c=0; c < arrCharsLen; c += 1) {
-#        var oImg = $('div_' + arrCharsIds[c]);
-#        var oBonus = $(arrCharsIds[c] + 'Bonus');
-#        $(arrCharsIds[c]).innerHTML = arrChars[c];
-#        if (arrCharsIds[c] == "nLength") { var minVal = parseInt(nMinPwdLen - 1); } else { var minVal = 0; }
-#        if (arrChars[c] == parseInt(minVal + 1)) { nReqChar += 1; oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-#        else if (arrChars[c] > parseInt(minVal + 1)) { nReqChar += 1; oImg.className = "exceed"; oBonus.parentNode.className = "exceed"; }
-#        else { oImg.className = "fail"; oBonus.parentNode.className = "fail"; }
-#      }
-#      nRequirements = nReqChar;
-#      if (@password.length >= nMinPwdLen) { var nMinReqChars = 3; } else { var nMinReqChars = 4; }
-#      if (nRequirements > nMinReqChars) {  // One or more required characters exist
-#        nScore = parseInt(nScore + (nRequirements * 2)); 
-#        sRequirements = "+ " + parseInt(nRequirements * 2);
-#      }
-#      $("nRequirementsBonus").innerHTML = sRequirements;
-#  
-#      /* Determine if additional bonuses need to be applied and set image indicators accordingly */
-#      var arrChars = [nMidChar,nRequirements];
-#      var arrCharsIds = ["nMidChar","nRequirements"];
-#      var arrCharsLen = arrChars.length;
-#      for (var c=0; c < arrCharsLen; c += 1) {
-#        var oImg = $('div_' + arrCharsIds[c]);
-#        var oBonus = $(arrCharsIds[c] + 'Bonus');
-#        $(arrCharsIds[c]).innerHTML = arrChars[c];
-#        if (arrCharsIds[c] == "nRequirements") { var minVal = nMinReqChars; } else { var minVal = 0; }
-#        if (arrChars[c] == parseInt(minVal + 1)) { oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-#        else if (arrChars[c] > parseInt(minVal + 1)) { oImg.className = "exceed"; oBonus.parentNode.className = "exceed"; }
-#        else { oImg.className = "fail"; oBonus.parentNode.className = "fail"; }
-#      }
-#  
-#      /* Determine if suggested requirements have been met and set image indicators accordingly */
-#      var arrChars = [nAlphasOnly,nNumbersOnly,nRepChar,nConsecAlphaUC,nConsecAlphaLC,nConsecNumber,nSeqAlpha,nSeqNumber,nSeqSymbol];
-#      var arrCharsIds = ["nAlphasOnly","nNumbersOnly","nRepChar","nConsecAlphaUC","nConsecAlphaLC","nConsecNumber","nSeqAlpha","nSeqNumber","nSeqSymbol"];
-#      var arrCharsLen = arrChars.length;
-#      for (var c=0; c < arrCharsLen; c += 1) {
-#        var oImg = $('div_' + arrCharsIds[c]);
-#        var oBonus = $(arrCharsIds[c] + 'Bonus');
-#        $(arrCharsIds[c]).innerHTML = arrChars[c];
-#        if (arrChars[c] > 0) { oImg.className = "warn"; oBonus.parentNode.className = "warn"; }
-#        else { oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-#      }
-      
       # Determine complexity based on overall score
       if (nScore > 100)
         nScore = 100
@@ -321,10 +327,10 @@ module Passgen
         nScore = 0
       end
       @complexity = case nScore
-      when [0...20]: "Trivial"
-      when [20...40]: "Weak"
-      when [40...60]: "Good"
-      when [60...80]: "Strong"
+      when 0...20: "Trivial"
+      when 20...40: "Weak"
+      when 40...60: "Good"
+      when 60...80: "Strong"
       else
         "Very Strong"
       end

@@ -195,35 +195,30 @@ module Passgen
         sAlphaUC = "+ #{(nLength - nAlphaUC) * 2}" 
       end
       puts "nAlphaUCBonus: #{sAlphaUC}" 
-      puts "nScore: #{nScore}" 
 
       if nAlphaLC > 0 && nAlphaLC < nLength 
         nScore += (nLength - nAlphaLC) * 2
         sAlphaLC = "+ #{(nLength - nAlphaLC) * 2}"
       end
       puts "nAlphaLCBonus: #{sAlphaLC}"
-      puts "nScore: #{nScore}" 
 
       if (nNumber > 0 && nNumber < nLength)
         nScore += nNumber * nMultNumber
         sNumber = "+ #{nNumber * nMultNumber}"
       end
       puts "nNumberBonus: #{sNumber}"
-      puts "nScore: #{nScore}" 
 
       if nSymbol > 0  
         nScore += nSymbol * nMultSymbol
         sSymbol = "+ #{nSymbol * nMultSymbol}"
       end
       puts "nSymbolBonus: #{sSymbol}"
-      puts "nScore: #{nScore}" 
 
       if nMidChar > 0
         nScore += nMidChar * nMultMidChar
         sMidChar = "+ #{nMidChar * nMultMidChar}"
       end
       puts "nMidCharBonus: #{sMidChar}"
-      puts "nScore: #{nScore}" 
       
       # Point deductions for poor practices
       if (nAlphaLC > 0 || nAlphaUC > 0) && nSymbol == 0 && nNumber == 0 # Only Letters
@@ -232,7 +227,6 @@ module Passgen
         sAlphasOnly = "- #{nLength}"
       end
       puts "nAlphasOnlyBonus: #{sAlphasOnly}"
-      puts "nScore: #{nScore}"
 
       if nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0 # Only Numbers
         nScore -= nLength
@@ -240,56 +234,48 @@ module Passgen
         sNumbersOnly = "- #{nLength}"
       end
       puts "nNumbersOnlyBonus: #{sNumbersOnly}"
-      puts "nScore: #{nScore}"
 
       if nRepChar > 0 # Same character exists more than once
         nScore -= nRepInc
         sRepChar = "- #{nRepInc}"
       end
       puts "nRepCharBonus: #{sRepChar}"
-      puts "nScore: #{nScore}"
 
       if nConsecAlphaUC > 0 # Consecutive Uppercase Letters exist
         nScore -= nConsecAlphaUC * nMultConsecAlphaUC
         sConsecAlphaUC = "- #{nConsecAlphaUC * nMultConsecAlphaUC}"
       end
       puts "nConsecAlphaUCBonus: #{sConsecAlphaUC}"
-      puts "nScore: #{nScore}"
 
       if nConsecAlphaLC > 0 # Consecutive Lowercase Letters exist
         nScore -= nConsecAlphaLC * nMultConsecAlphaLC
         sConsecAlphaLC = "- #{nConsecAlphaLC * nMultConsecAlphaLC}"
       end
       puts "nConsecAlphaLCBonus: #{sConsecAlphaLC}"
-      puts "nScore: #{nScore}"
 
       if nConsecNumber > 0 # Consecutive Numbers exist
         nScore -= nConsecNumber * nMultConsecNumber
         sConsecNumber = "- #{nConsecNumber * nMultConsecNumber}"
       end
       puts "nConsecNumberBonus: #{sConsecNumber}"
-      puts "nScore: #{nScore}"
 
       if nSeqAlpha > 0 # Sequential alpha strings exist (3 characters or more)
         nScore -= nSeqAlpha * nMultSeqAlpha
         sSeqAlpha = "- #{nSeqAlpha * nMultSeqAlpha}"
       end
       puts "nSeqAlphaBonus: #{sSeqAlpha}"
-      puts "nScore: #{nScore}"
 
       if nSeqNumber > 0 # Sequential numeric strings exist (3 character or more)
         nScore -= nSeqNumber * nMultSeqNumber
         sSeqNumber = "- #{nSeqNumber * nMultSeqNumber}"
       end
       puts "nSeqNumberBonus: #{sSeqNumber}"
-      puts "nScore: #{nScore}"
 
       if nSeqSymbol > 0 # Sequential symbol strings exist (3 character or more)
         nScore -= nSeqSymbol * nMultSeqSymbol
         sSeqSymbol = "- #{nSeqSymbol * nMultSeqSymbol}"
       end
       puts "nSeqSymbolBonus: #{sSeqSymbol}"
-      puts "nScore: #{nScore}"
 
       # Determine if mandatory requirements have been met and set image indicators accordingly
       arrChars = [nLength, nAlphaUC, nAlphaLC, nNumber, nSymbol]
@@ -344,7 +330,6 @@ module Passgen
         @errors << "Password must be at least #{MIN_LENGTH} characters long"
         return false
       end
-      puts "Minimum requirements met."
       true
     end
   end

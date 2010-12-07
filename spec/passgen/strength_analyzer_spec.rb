@@ -44,4 +44,32 @@ describe "Using strength analyzer" do
     sa.complexity.should == "Weak"
     sa.errors.should == []
   end
+
+  it "should analyze hht14AAA correctly" do
+    sa = Passgen.analyze("hht14AAA")
+    sa.score.should == 57
+    sa.complexity.should == "Good"
+    sa.errors.should == []
+  end
+  
+  it "should analyze hie14KOL correctly" do
+    sa = Passgen.analyze("hie14KOL")
+    sa.score.should == 62
+    sa.complexity.should == "Strong"
+    sa.errors.should == []
+  end
+  
+  it "should analyze hI&14KoL correctly" do
+    sa = Passgen.analyze("hI&14KoL")
+    sa.score.should == 82
+    sa.complexity.should == "Very Strong"
+    sa.errors.should == []
+  end
+
+  it "should analyze hI&1#4KoL correctly" do
+    sa = Passgen.analyze("hI&1#4KoL")
+    sa.score.should == 100
+    sa.complexity.should == "Very Strong"
+    sa.errors.should == []
+  end
 end

@@ -122,11 +122,12 @@
 #WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'digest'
-require 'probabilities'
+require 'passgen/probabilities'
+require 'passgen/strength_analyzer'
 
 module Passgen
 
-  VERSION = "0.9.1"
+  VERSION = "1.0.0"
   
   DEFAULT_PARAMS = {
     :number => 1,
@@ -154,6 +155,10 @@ module Passgen
     end
   end
 
+  def self.analyze(pw)
+    
+  end
+  
   private
   def self.alphabet(index)
     if use_lowercase? && !use_uppercase?

@@ -156,7 +156,7 @@ module Passgen
   end
 
   def self.analyze(pw)
-    
+    Passgen::StrengthAnalyzer.analyze(pw)
   end
   
   private

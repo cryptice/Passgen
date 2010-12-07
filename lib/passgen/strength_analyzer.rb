@@ -188,37 +188,37 @@ module Passgen
       # Modify overall score value based on usage vs requirements
   
       # General point assignment
-      puts "nLengthBonus: #{nScore}" 
+      #puts "nLengthBonus: #{nScore}"
 
       if nAlphaUC > 0 && nAlphaUC < nLength
         nScore += (nLength - nAlphaUC) * 2
         sAlphaUC = "+ #{(nLength - nAlphaUC) * 2}" 
       end
-      puts "nAlphaUCBonus: #{sAlphaUC}" 
+      #puts "nAlphaUCBonus: #{sAlphaUC}" 
 
       if nAlphaLC > 0 && nAlphaLC < nLength 
         nScore += (nLength - nAlphaLC) * 2
         sAlphaLC = "+ #{(nLength - nAlphaLC) * 2}"
       end
-      puts "nAlphaLCBonus: #{sAlphaLC}"
+      #puts "nAlphaLCBonus: #{sAlphaLC}"
 
       if (nNumber > 0 && nNumber < nLength)
         nScore += nNumber * nMultNumber
         sNumber = "+ #{nNumber * nMultNumber}"
       end
-      puts "nNumberBonus: #{sNumber}"
+      #puts "nNumberBonus: #{sNumber}"
 
       if nSymbol > 0  
         nScore += nSymbol * nMultSymbol
         sSymbol = "+ #{nSymbol * nMultSymbol}"
       end
-      puts "nSymbolBonus: #{sSymbol}"
+      #puts "nSymbolBonus: #{sSymbol}"
 
       if nMidChar > 0
         nScore += nMidChar * nMultMidChar
         sMidChar = "+ #{nMidChar * nMultMidChar}"
       end
-      puts "nMidCharBonus: #{sMidChar}"
+      #puts "nMidCharBonus: #{sMidChar}"
       
       # Point deductions for poor practices
       if (nAlphaLC > 0 || nAlphaUC > 0) && nSymbol == 0 && nNumber == 0 # Only Letters
@@ -226,56 +226,56 @@ module Passgen
         nAlphasOnly = nLength
         sAlphasOnly = "- #{nLength}"
       end
-      puts "nAlphasOnlyBonus: #{sAlphasOnly}"
+      #puts "nAlphasOnlyBonus: #{sAlphasOnly}"
 
       if nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0 # Only Numbers
         nScore -= nLength
         nNumbersOnly = nLength
         sNumbersOnly = "- #{nLength}"
       end
-      puts "nNumbersOnlyBonus: #{sNumbersOnly}"
+      #puts "nNumbersOnlyBonus: #{sNumbersOnly}"
 
       if nRepChar > 0 # Same character exists more than once
         nScore -= nRepInc
         sRepChar = "- #{nRepInc}"
       end
-      puts "nRepCharBonus: #{sRepChar}"
+      #puts "nRepCharBonus: #{sRepChar}"
 
       if nConsecAlphaUC > 0 # Consecutive Uppercase Letters exist
         nScore -= nConsecAlphaUC * nMultConsecAlphaUC
         sConsecAlphaUC = "- #{nConsecAlphaUC * nMultConsecAlphaUC}"
       end
-      puts "nConsecAlphaUCBonus: #{sConsecAlphaUC}"
+      #puts "nConsecAlphaUCBonus: #{sConsecAlphaUC}"
 
       if nConsecAlphaLC > 0 # Consecutive Lowercase Letters exist
         nScore -= nConsecAlphaLC * nMultConsecAlphaLC
         sConsecAlphaLC = "- #{nConsecAlphaLC * nMultConsecAlphaLC}"
       end
-      puts "nConsecAlphaLCBonus: #{sConsecAlphaLC}"
+      #puts "nConsecAlphaLCBonus: #{sConsecAlphaLC}"
 
       if nConsecNumber > 0 # Consecutive Numbers exist
         nScore -= nConsecNumber * nMultConsecNumber
         sConsecNumber = "- #{nConsecNumber * nMultConsecNumber}"
       end
-      puts "nConsecNumberBonus: #{sConsecNumber}"
+      #puts "nConsecNumberBonus: #{sConsecNumber}"
 
       if nSeqAlpha > 0 # Sequential alpha strings exist (3 characters or more)
         nScore -= nSeqAlpha * nMultSeqAlpha
         sSeqAlpha = "- #{nSeqAlpha * nMultSeqAlpha}"
       end
-      puts "nSeqAlphaBonus: #{sSeqAlpha}"
+      #puts "nSeqAlphaBonus: #{sSeqAlpha}"
 
       if nSeqNumber > 0 # Sequential numeric strings exist (3 character or more)
         nScore -= nSeqNumber * nMultSeqNumber
         sSeqNumber = "- #{nSeqNumber * nMultSeqNumber}"
       end
-      puts "nSeqNumberBonus: #{sSeqNumber}"
+      #puts "nSeqNumberBonus: #{sSeqNumber}"
 
       if nSeqSymbol > 0 # Sequential symbol strings exist (3 character or more)
         nScore -= nSeqSymbol * nMultSeqSymbol
         sSeqSymbol = "- #{nSeqSymbol * nMultSeqSymbol}"
       end
-      puts "nSeqSymbolBonus: #{sSeqSymbol}"
+      #puts "nSeqSymbolBonus: #{sSeqSymbol}"
 
       # Determine if mandatory requirements have been met and set image indicators accordingly
       arrChars = [nLength, nAlphaUC, nAlphaLC, nNumber, nSymbol]
@@ -303,8 +303,8 @@ module Passgen
         nScore += (nRequirements * 2) 
         sRequirements = "+ #{nRequirements * 2}"
       end
-      puts "nRequirementsBonus: #{sRequirements}"
-      puts "nScore: #{nScore}"
+      #puts "nRequirementsBonus: #{sRequirements}"
+      #puts "nScore: #{nScore}"
   
       # Determine complexity based on overall score
       if (nScore > 100)

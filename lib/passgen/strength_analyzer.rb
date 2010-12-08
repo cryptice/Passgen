@@ -63,24 +63,9 @@ module Passgen
       nTmpAlphaLC = ""
       nTmpNumber = ""
       nTmpSymbol = ""
-      sAlphaUC = "0"
-      sAlphaLC = "0"
-      sNumber = "0"
-      sSymbol = "0"
-      sMidChar = "0"
-      sRequirements = "0"
-      sAlphasOnly = "0"
-      sNumbersOnly = "0"
-      sRepChar = "0"
-      sConsecAlphaUC = "0"
-      sConsecAlphaLC = "0"
-      sConsecNumber = "0"
-      sSeqAlpha = "0"
-      sSeqNumber = "0"
-      sSeqSymbol = "0"
       sAlphas = 'abcdefghijklmnopqrstuvwxyz'
       sNumerics = '01234567890'
-      sSymbols = ')!@#$%^&*()'
+      sSymbols  = '!@#$%&/()+?*'
       sComplexity = 'Invalid'
       sStandards = 'Below'
       nMinPwdLen = MIN_LENGTH
@@ -156,7 +141,7 @@ module Passgen
       end
       
       # Check for sequential alpha string patterns (forward and reverse)
-      23.times do |s|
+      (sAlphas.size - 3).times do |s|
         sFwd = sAlphas[s...s+3]
         sRev = sFwd.reverse
         if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
@@ -166,7 +151,7 @@ module Passgen
       end
       
       # Check for sequential numeric string patterns (forward and reverse)
-      8.times do |s|
+      (sNumerics.size - 3).times do |s|
         sFwd = sNumerics[s...s+3]
         sRev = sFwd.reverse
         if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
@@ -176,7 +161,7 @@ module Passgen
       end
       
       # Check for sequential symbol string patterns (forward and reverse)
-      8.times do |s|
+      (sSymbols.size - 3).times do |s|
         sFwd = sSymbols[s...s+3]
         sRev = sFwd.reverse
         if @password.downcase.index(sFwd) || @password.downcase.index(sRev)
@@ -186,125 +171,82 @@ module Passgen
       end
       
       # Modify overall score value based on usage vs requirements
-  
-      # General point assignment
-      #puts "nLengthBonus: #{nScore}"
-
       if nAlphaUC > 0 && nAlphaUC < nLength
         nScore += (nLength - nAlphaUC) * 2
-        sAlphaUC = "+ #{(nLength - nAlphaUC) * 2}" 
       end
-      #puts "nAlphaUCBonus: #{sAlphaUC}" 
 
       if nAlphaLC > 0 && nAlphaLC < nLength 
         nScore += (nLength - nAlphaLC) * 2
-        sAlphaLC = "+ #{(nLength - nAlphaLC) * 2}"
       end
-      #puts "nAlphaLCBonus: #{sAlphaLC}"
 
       if (nNumber > 0 && nNumber < nLength)
         nScore += nNumber * nMultNumber
-        sNumber = "+ #{nNumber * nMultNumber}"
       end
-      #puts "nNumberBonus: #{sNumber}"
 
       if nSymbol > 0  
         nScore += nSymbol * nMultSymbol
-        sSymbol = "+ #{nSymbol * nMultSymbol}"
       end
-      #puts "nSymbolBonus: #{sSymbol}"
 
       if nMidChar > 0
         nScore += nMidChar * nMultMidChar
-        sMidChar = "+ #{nMidChar * nMultMidChar}"
       end
-      #puts "nMidCharBonus: #{sMidChar}"
       
       # Point deductions for poor practices
       if (nAlphaLC > 0 || nAlphaUC > 0) && nSymbol == 0 && nNumber == 0 # Only Letters
         nScore -= nLength
         nAlphasOnly = nLength
-        sAlphasOnly = "- #{nLength}"
       end
-      #puts "nAlphasOnlyBonus: #{sAlphasOnly}"
 
       if nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0 # Only Numbers
         nScore -= nLength
         nNumbersOnly = nLength
-        sNumbersOnly = "- #{nLength}"
       end
-      #puts "nNumbersOnlyBonus: #{sNumbersOnly}"
 
       if nRepChar > 0 # Same character exists more than once
         nScore -= nRepInc
-        sRepChar = "- #{nRepInc}"
       end
-      #puts "nRepCharBonus: #{sRepChar}"
 
       if nConsecAlphaUC > 0 # Consecutive Uppercase Letters exist
         nScore -= nConsecAlphaUC * nMultConsecAlphaUC
-        sConsecAlphaUC = "- #{nConsecAlphaUC * nMultConsecAlphaUC}"
       end
-      #puts "nConsecAlphaUCBonus: #{sConsecAlphaUC}"
 
       if nConsecAlphaLC > 0 # Consecutive Lowercase Letters exist
         nScore -= nConsecAlphaLC * nMultConsecAlphaLC
-        sConsecAlphaLC = "- #{nConsecAlphaLC * nMultConsecAlphaLC}"
       end
-      #puts "nConsecAlphaLCBonus: #{sConsecAlphaLC}"
 
       if nConsecNumber > 0 # Consecutive Numbers exist
         nScore -= nConsecNumber * nMultConsecNumber
-        sConsecNumber = "- #{nConsecNumber * nMultConsecNumber}"
       end
-      #puts "nConsecNumberBonus: #{sConsecNumber}"
 
       if nSeqAlpha > 0 # Sequential alpha strings exist (3 characters or more)
         nScore -= nSeqAlpha * nMultSeqAlpha
-        sSeqAlpha = "- #{nSeqAlpha * nMultSeqAlpha}"
       end
-      #puts "nSeqAlphaBonus: #{sSeqAlpha}"
 
       if nSeqNumber > 0 # Sequential numeric strings exist (3 character or more)
         nScore -= nSeqNumber * nMultSeqNumber
-        sSeqNumber = "- #{nSeqNumber * nMultSeqNumber}"
       end
-      #puts "nSeqNumberBonus: #{sSeqNumber}"
 
       if nSeqSymbol > 0 # Sequential symbol strings exist (3 character or more)
         nScore -= nSeqSymbol * nMultSeqSymbol
-        sSeqSymbol = "- #{nSeqSymbol * nMultSeqSymbol}"
       end
-      #puts "nSeqSymbolBonus: #{sSeqSymbol}"
 
       # Determine if mandatory requirements have been met and set image indicators accordingly
       arrChars = [nLength, nAlphaUC, nAlphaLC, nNumber, nSymbol]
       arrCharsIds = ["nLength", "nAlphaUC", "nAlphaLC", "nNumber", "nSymbol"]
       arrCharsLen = arrChars.length;
       arrCharsLen.times do |c|
-        if (arrCharsIds[c] == "nLength") 
-          minVal = MIN_LENGTH - 1
-        else
-          minVal = 0
-        end
+        minVal = arrCharsIds[c] == "nLength" ? MIN_LENGTH - 1 : 0
         if arrChars[c] == (minVal + 1)
           nReqChar += 1
         elsif arrChars[c] > (minVal + 1)
           nReqChar += 1
         end
       end
-      nRequirements = nReqChar;
-      if @password.length >= nMinPwdLen
-        nMinReqChars = 3
-      else
-        nMinReqChars = 4
-      end
+      nRequirements = nReqChar
+      nMinReqChars = @password.length >= nMinPwdLen ? 3 : 4
       if nRequirements > nMinReqChars # One or more required characters exist
         nScore += (nRequirements * 2) 
-        sRequirements = "+ #{nRequirements * 2}"
       end
-      #puts "nRequirementsBonus: #{sRequirements}"
-      #puts "nScore: #{nScore}"
   
       # Determine complexity based on overall score
       if (nScore > 100)

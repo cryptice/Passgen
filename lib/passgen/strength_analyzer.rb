@@ -255,10 +255,14 @@ module Passgen
         nScore = 0
       end
       @complexity = case nScore
-      when 0...20: "Trivial"
-      when 20...40: "Weak"
-      when 40...60: "Good"
-      when 60...80: "Strong"
+      when 0...20
+        "Trivial"
+      when 20...40
+        "Weak"
+      when 40...60
+        "Good"
+      when 60...80
+        "Strong"
       else
         "Very Strong"
       end

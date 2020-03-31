@@ -10,6 +10,10 @@ pronounceable passwords.
 Since 1.0.0 you can also analyze the quality of a password, both as a numeric score
 between 0 and 100 and as a complexity ranking.
 
+The algorithm used exists in a number of variations for different languages, if if anyone
+knows its origin and would like to include credit to the original author, please get in
+touch via GitHub.
+
 == Install
 
   gem install passgen
@@ -133,8 +137,6 @@ Set the srand seed to the given integer prior to generating the passwords.
 :digits_before => 2 (Only in combination with pronounceable)
 
 == Copyright and license
-
-Copyright (c) 2009-2010 Erik Lindblad
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

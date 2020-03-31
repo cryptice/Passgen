@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{A password generation gem for Ruby and Rails applications.}
   s.email = %q{erik@l2c.se}
   s.extra_rdoc_files = ["CHANGELOG", "README.rdoc", "lib/passgen.rb", "lib/passgen/probabilities.rb", "lib/passgen/strength_analyzer.rb"]
-  s.files = ["CHANGELOG", "Manifest", "README.rdoc", "Rakefile", "init.rb", "lib/passgen.rb", "lib/passgen/probabilities.rb", "lib/passgen/strength_analyzer.rb", "passgen.gemspec", "spec/passgen/strength_analyzer_spec.rb", "spec/passgen_spec.rb"]
+  s.files = ["CHANGELOG", "Manifest", "README.rdoc", "Rakefile", "rails/init.rb", "lib/passgen.rb", "lib/passgen/probabilities.rb", "lib/passgen/strength_analyzer.rb", "passgen.gemspec", "spec/passgen/strength_analyzer_spec.rb", "spec/passgen_spec.rb"]
   s.homepage = %q{http://github.com/cryptice/passgen}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Passgen", "--main", "README.rdoc"]
   s.require_paths = ["lib"]

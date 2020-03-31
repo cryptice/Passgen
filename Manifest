@@ -2,7 +2,7 @@ CHANGELOG
 Manifest
 README.rdoc
 Rakefile
-init.rb
+rails/init.rb
 lib/passgen.rb
 lib/passgen/probabilities.rb
 lib/passgen/strength_analyzer.rb

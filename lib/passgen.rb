@@ -128,22 +128,22 @@ require 'passgen/strength_analyzer'
 module Passgen
 
   VERSION = "1.0.0"
-  
+
   DEFAULT_PARAMS = {
-    :number => 1,
-    :length => 10,
-    :lowercase => true,
-    :uppercase => true,
-    :digits => true,
-    :symbols => false,
-    :pronounceable => false
+      number:        1,
+      length:        10,
+      lowercase:     true,
+      uppercase:     true,
+      digits:        true,
+      symbols:       false,
+      pronounceable: false
   }
 
   def self.default_seed
     Digest::MD5.hexdigest("#{rand}#{Time.now}#{Process.object_id}").to_i(16)
   end
 
-  def self.generate(params={})
+  def self.generate(params = {})
     set_options(params)
     tokens = valid_tokens
     set_seed
@@ -151,15 +151,16 @@ module Passgen
     if n == 1
       generate_one(tokens)
     else
-      Array.new(n) {|i| generate_one(tokens) }
+      Array.new(n) { |i| generate_one(tokens) }
     end
   end
 
   def self.analyze(pw)
     Passgen::StrengthAnalyzer.analyze(pw)
   end
-  
+
   private
+
   def self.alphabet(index)
     if use_lowercase? && !use_uppercase?
       LOWERCASE_TOKENS[index]
@@ -171,12 +172,12 @@ module Passgen
       tmp
     end
   end
-  
+
   def self.generate_one(tokens)
     if @options[:pronounceable]
       generate_pronounceable
     else
-      Array.new(password_length) {tokens[rand(tokens.size)]}.join
+      Array.new(password_length) { tokens[rand(tokens.size)] }.join
     end
   end
 
@@ -185,24 +186,24 @@ module Passgen
 
     # Append digits in front
     digits_prefix = if @options[:digits_before]
-      @options[:length] -= @options[:digits_before]
-      Array.new(@options[:digits_before]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
-    else
-      ""
-    end
+                      @options[:length] -= @options[:digits_before]
+                      Array.new(@options[:digits_before]) { DIGIT_TOKENS[rand(DIGIT_TOKENS.size)] }.join
+                    else
+                      ""
+                    end
 
     # Append digits at the end
     digits_suffix = if @options[:digits_after]
-      @options[:length] -= @options[:digits_after]
-      Array.new(@options[:digits_after]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
-    else
-      ""
-    end
+                      @options[:length] -= @options[:digits_after]
+                      Array.new(@options[:digits_after]) { DIGIT_TOKENS[rand(DIGIT_TOKENS.size)] }.join
+                    else
+                      ""
+                    end
 
     # Find a random starting point.
     found_start = false
-    ranno = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
-    sum = 0;
+    ranno       = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
+    sum         = 0;
     N_LETTERS.times do |c1|
       N_LETTERS.times do |c2|
         N_LETTERS.times do |c3|
@@ -222,13 +223,13 @@ module Passgen
 
     # Do a random walk.
     (3...@options[:length]).each do |nchar|
-      c1 = LETTER_INDEXES[password[nchar-2..nchar-2]]
-      c2 = LETTER_INDEXES[password[nchar-1..nchar-1]]
+      c1  = LETTER_INDEXES[password[nchar - 2..nchar - 2]]
+      c2  = LETTER_INDEXES[password[nchar - 1..nchar - 1]]
       sum = 0
-      N_LETTERS.times {|c3| sum += P[c1][c2][c3]}
+      N_LETTERS.times { |c3| sum += P[c1][c2][c3] }
       break if sum == 0
       ranno = rand * sum
-      sum = 0;
+      sum   = 0;
       N_LETTERS.times do |c3|
         sum += P[c1][c2][c3]
         if sum > ranno
@@ -239,7 +240,7 @@ module Passgen
     end
     digits_prefix + password + digits_suffix
   end
-  
+
   def self.password_length
     if @options[:length].is_a?(Range)
       tmp = @options[:length].to_a
@@ -256,12 +257,12 @@ module Passgen
   def self.set_options(params)
     if params[:lowercase] == :only
       params[:uppercase] = false
-      params[:digits] = false
+      params[:digits]    = false
     end
 
     if params[:uppercase] == :only
       params[:lowercase] = false
-      params[:digits] = false
+      params[:digits]    = false
     end
 
     if params[:digits] == :only
@@ -272,8 +273,8 @@ module Passgen
     if params[:symbols] == :only
       params[:lowercase] = false
       params[:uppercase] = false
-      params[:digits] = false
-      params[:symbols] = true
+      params[:digits]    = false
+      params[:symbols]   = true
     end
 
     if params[:digits_before] == true

@@ -117,8 +117,8 @@ module Passgen
               nConsecCharType += 1
             end
           end
-          nTmpSymbol = a;
-          nSymbol += 1;
+          nTmpSymbol = a
+          nSymbol += 1
         end
 
         # Internal loop through password to check for repeat characters
@@ -135,7 +135,7 @@ module Passgen
         end
         if bCharExists
           nRepChar += 1
-          nUnqChar = arrPwdLen - nRepChar;
+          nUnqChar = arrPwdLen - nRepChar
           nRepInc = (nUnqChar > 0) ? (nRepInc / nUnqChar).ceil : nRepInc.ceil
         end
       end
@@ -233,7 +233,7 @@ module Passgen
       # Determine if mandatory requirements have been met and set image indicators accordingly
       arrChars    = [nLength, nAlphaUC, nAlphaLC, nNumber, nSymbol]
       arrCharsIds = ["nLength", "nAlphaUC", "nAlphaLC", "nNumber", "nSymbol"]
-      arrCharsLen = arrChars.length;
+      arrCharsLen = arrChars.length
       arrCharsLen.times do |c|
         minVal = arrCharsIds[c] == "nLength" ? MIN_LENGTH - 1 : 0
         if arrChars[c] == (minVal + 1)

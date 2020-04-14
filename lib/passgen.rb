@@ -1,8 +1,8 @@
 #= Passgen
 #
-#Ruby gem for generating passwords quickly and easily. Although it is
-#suitable for use within Rails it has no Rails dependencies and can be used in
-#non-Rails applications as well.
+# Ruby gem for generating passwords quickly and easily. Although it is
+# suitable for use within Rails it has no Rails dependencies and can be used in
+# non-Rails applications as well.
 #
 #== Install
 #
@@ -10,116 +10,116 @@
 #
 #== Usage
 #
-#The usage could not be easier. Just require and call the generate method:
+# The usage could not be easier. Just require and call the generate method:
 #
 #  >> require 'rubygems'
 #  >> require 'passgen'
 #  >> Passgen::generate
 #  => "zLWCeS3xC9"
 #
-#== Examples
+# == Examples
 #
 #  >> Passgen::generate
 #  => "zLWCeS3xC9"
 #
-#  >> Passgen::generate(:length => 20)
+#  >> Passgen::generate(length: 20)
 #  => "6lCcHvkuEW6OuzAtkoAs"
 #
-#  >> Passgen::generate(:symbols => true)
+#  >> Passgen::generate(symbols: true)
 #  => "gr)$6bIym1"
 #
-#  >> Passgen::generate(:lowercase => :only)
+#  >> Passgen::generate(lowercase: :only)
 #  => "ysbwuxbcea"
 #
-#  >> Passgen::generate(:number => 3)
+#  >> Passgen::generate(number: 3)
 #  => ["REdOigTkdI", "PQu8DsV9WZ", "qptKLbw8YQ"]
 #
-#  >> Passgen::generate(:seed => 5)
+#  >> Passgen::generate(seed: 5)
 #  => "JoV9M2qjiK"
-#  >> Passgen::generate(:seed => 5) # Will generate same password again
+#  >> Passgen::generate(seed: 5) # Will generate same password again
 #  => "JoV9M2qjiK"
 #
-#  >> Passgen::generate(:seed => :default) # Will set random seed...
+#  >> Passgen::generate(seed: :default) # Will set random seed...
 #  => "SI8QDBdV98"
-#  >> Passgen::generate(:seed => :default) # and hence give different password
+#  >> Passgen::generate(seed: :default) # and hence give different password
 #  => "tHHU5HLBAn"
 #
-#== Options:
+# == Options:
 #
-#=== :lowercase => true/false/:only
-#* true - Use lowercase letters in the generated password.
-#* false - Do not use lowercase letters in the generated password.
-#* :only - Only use lowercase letters in the generated password.
+# === :lowercase => true/false/:only
+# * true - Use lowercase letters in the generated password.
+# * false - Do not use lowercase letters in the generated password.
+# * :only - Only use lowercase letters in the generated password.
 #
-#=== :uppercase => true/false/:only
-#* true - Use uppercase letters in the generated password.
-#* false - Do not use uppercase letters in the generated password.
-#* :only - Only use uppercase letters in the generated password.
+# === :uppercase => true/false/:only
+# * true - Use uppercase letters in the generated password.
+# * false - Do not use uppercase letters in the generated password.
+# * :only - Only use uppercase letters in the generated password.
 #
-#=== :digits => true/false/:only
-#* true - Use digits in the generated password.
-#* false - Do not use digits in the generated password.
-#* :only - Only use digits in the generated password.
+# === :digits => true/false/:only
+# * true - Use digits in the generated password.
+# * false - Do not use digits in the generated password.
+# * :only - Only use digits in the generated password.
 #
-#=== :symbols => true/false/:only/:list
-#* true - Use symbols in the generated password.
-#* false - Do not use symbols in the generated password.
-#* :only - Only use symbols in the generated password.
-#* :list - A string with the symbols to use. Not implemented yet.
+# === :symbols => true/false/:only/:list
+# * true - Use symbols in the generated password.
+# * false - Do not use symbols in the generated password.
+# * :only - Only use symbols in the generated password.
+# * :list - A string with the symbols to use. Not implemented yet.
 #
-#=== :pronounceable => true/false
-#Not implmented yet.
+# === :pronounceable => true/false
+# Not implmented yet.
 #
-#=== :number => integer
-#Number of passwords to generate. If >1 the result is an Array.
+# === :number => integer
+# Number of passwords to generate. If >1 the result is an Array.
 #
-#=== :length => integer/range
-#The number of characters in the generated passwords. A range results in passwords
-#lengths within the given range.
+# === :length => integer/range
+# The number of characters in the generated passwords. A range results in passwords
+# lengths within the given range.
 #
-#=== :seed => integer/:default
-#Set the srand seed to the given integer prior to generating the passwords.
+# === :seed => integer/:default
+# Set the srand seed to the given integer prior to generating the passwords.
 #
-#=== Default values:
+# === Default values:
 #
-#:lowercase => true
+# lowercase: true
 #
-#:uppercase => true
+# uppercase: true
 #
-#:digits => true
+# digits: true
 #
-#:symbols => false
+# symbols: false
 #
-#:pronounceable => Not implemented yet.
+# pronounceable: Not implemented yet.
 #
-#:number => 1
+# number: 1
 #
-#:length => 10
+# length: 10
 #
-#:seed => nil
+# seed: nil
 #
-#== Copyright and license
+# == Copyright and license
 #
-#Copyright (c) 2009 Erik Lindblad
+# Copyright (c) 2009 Erik Lindblad
 #
-#Permission is hereby granted, free of charge, to any person obtaining
-#a copy of this software and associated documentation files (the
-#"Software"), to deal in the Software without restriction, including
-#without limitation the rights to use, copy, modify, merge, publish,
-#distribute, sublicense, and/or sell copies of the Software, and to
-#permit persons to whom the Software is furnished to do so, subject to
-#the following conditions:
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
 #
-#The above copyright notice and this permission notice shall be
-#included in all copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
 #
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-#EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-#MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-#NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-#LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-#OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-#WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'digest'
 require 'passgen/probabilities'
@@ -128,22 +128,22 @@ require 'passgen/strength_analyzer'
 module Passgen
 
   VERSION = "1.0.0"
-  
+
   DEFAULT_PARAMS = {
-    :number => 1,
-    :length => 10,
-    :lowercase => true,
-    :uppercase => true,
-    :digits => true,
-    :symbols => false,
-    :pronounceable => false
+      number:        1,
+      length:        10,
+      lowercase:     true,
+      uppercase:     true,
+      digits:        true,
+      symbols:       false,
+      pronounceable: false
   }
 
   def self.default_seed
     Digest::MD5.hexdigest("#{rand}#{Time.now}#{Process.object_id}").to_i(16)
   end
 
-  def self.generate(params={})
+  def self.generate(params = {})
     set_options(params)
     tokens = valid_tokens
     set_seed
@@ -151,15 +151,16 @@ module Passgen
     if n == 1
       generate_one(tokens)
     else
-      Array.new(n) {|i| generate_one(tokens) }
+      Array.new(n) { |i| generate_one(tokens) }
     end
   end
 
   def self.analyze(pw)
     Passgen::StrengthAnalyzer.analyze(pw)
   end
-  
+
   private
+
   def self.alphabet(index)
     if use_lowercase? && !use_uppercase?
       LOWERCASE_TOKENS[index]
@@ -171,12 +172,12 @@ module Passgen
       tmp
     end
   end
-  
+
   def self.generate_one(tokens)
     if @options[:pronounceable]
       generate_pronounceable
     else
-      Array.new(password_length) {tokens[rand(tokens.size)]}.join
+      Array.new(password_length) { tokens[rand(tokens.size)] }.join
     end
   end
 
@@ -185,24 +186,24 @@ module Passgen
 
     # Append digits in front
     digits_prefix = if @options[:digits_before]
-      @options[:length] -= @options[:digits_before]
-      Array.new(@options[:digits_before]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
-    else
-      ""
-    end
+                      @options[:length] -= @options[:digits_before]
+                      Array.new(@options[:digits_before]) { DIGIT_TOKENS[rand(DIGIT_TOKENS.size)] }.join
+                    else
+                      ""
+                    end
 
     # Append digits at the end
     digits_suffix = if @options[:digits_after]
-      @options[:length] -= @options[:digits_after]
-      Array.new(@options[:digits_after]) {DIGIT_TOKENS[rand(DIGIT_TOKENS.size)]}.join
-    else
-      ""
-    end
+                      @options[:length] -= @options[:digits_after]
+                      Array.new(@options[:digits_after]) { DIGIT_TOKENS[rand(DIGIT_TOKENS.size)] }.join
+                    else
+                      ""
+                    end
 
     # Find a random starting point.
     found_start = false
-    ranno = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
-    sum = 0;
+    ranno       = rand * SIGMA # random number [0,1[ weighed by sum of frequencies
+    sum         = 0;
     N_LETTERS.times do |c1|
       N_LETTERS.times do |c2|
         N_LETTERS.times do |c3|
@@ -222,13 +223,13 @@ module Passgen
 
     # Do a random walk.
     (3...@options[:length]).each do |nchar|
-      c1 = LETTER_INDEXES[password[nchar-2..nchar-2]]
-      c2 = LETTER_INDEXES[password[nchar-1..nchar-1]]
+      c1  = LETTER_INDEXES[password[nchar - 2..nchar - 2]]
+      c2  = LETTER_INDEXES[password[nchar - 1..nchar - 1]]
       sum = 0
-      N_LETTERS.times {|c3| sum += P[c1][c2][c3]}
+      N_LETTERS.times { |c3| sum += P[c1][c2][c3] }
       break if sum == 0
       ranno = rand * sum
-      sum = 0;
+      sum   = 0
       N_LETTERS.times do |c3|
         sum += P[c1][c2][c3]
         if sum > ranno
@@ -239,7 +240,7 @@ module Passgen
     end
     digits_prefix + password + digits_suffix
   end
-  
+
   def self.password_length
     if @options[:length].is_a?(Range)
       tmp = @options[:length].to_a
@@ -256,12 +257,12 @@ module Passgen
   def self.set_options(params)
     if params[:lowercase] == :only
       params[:uppercase] = false
-      params[:digits] = false
+      params[:digits]    = false
     end
 
     if params[:uppercase] == :only
       params[:lowercase] = false
-      params[:digits] = false
+      params[:digits]    = false
     end
 
     if params[:digits] == :only
@@ -272,8 +273,8 @@ module Passgen
     if params[:symbols] == :only
       params[:lowercase] = false
       params[:uppercase] = false
-      params[:digits] = false
-      params[:symbols] = true
+      params[:digits]    = false
+      params[:symbols]   = true
     end
 
     if params[:digits_before] == true
